@@ -1,0 +1,309 @@
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.transition-opacity {
+    transition: opacity 0.5s ease-in-out;
+}
+/* Premium & Solid Theme */
+:root {
+    --primary-dark: #0D1117;
+    --card-dark: #1A1F29;
+    --accent-blue: #29A5F8;
+    --accent-gradient: linear-gradient(90deg, #29A5F8 0%, #2983F8 100%);
+    --border-premium: rgba(41, 165, 248, 0.1);
+  }
+  
+  body {
+    background-color: var(--primary-dark);
+    min-height: 100vh;
+  }
+  
+  /* Premium Card Styling */
+  .premium-card {
+    background: var(--card-dark);
+    border: 1px solid var(--border-premium);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    backdrop-filter: none; /* Remove glass effect */
+  }
+  
+  /* Stats Container */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .stats-item {
+    background: rgba(26, 31, 41, 0.95);
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-premium);
+  }
+  
+  /* Running Time Display */
+  .time-display {
+    font-family: 'Inter', monospace;
+    font-size: 1.25rem;
+    color: var(--accent-blue);
+    font-weight: 600;
+  }
+  
+  /* Status Badges */
+  .status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .status-badge.running {
+    background: rgba(41, 165, 248, 0.1);
+    color: #29A5F8;
+  }
+  
+  .status-badge.stopped {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+  }
+  
+  /* Mobile Responsive Fixes */
+  @media (max-width: 768px) {
+    .container {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .stats-item {
+      padding: 1rem;
+    }
+  
+    /* Fix text overflow */
+    .text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  
+  /* Premium Button Styles */
+  .btn-premium {
+    background: var(--accent-gradient);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(41, 165, 248, 0.2);
+  }
+  
+  .btn-premium:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(41, 165, 248, 0.3);
+  }
+  
+  /* Premium Gradient Text */
+  .gradient-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+  }
+
+  /* Copy button styles */
+.copy-button {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-button:hover {
+    color: var(--accent-blue);
+}
+
+.copy-success {
+    color: #10B981; /* Green color for success */
+}
+
+/* POC Status Card Styles */
+.poc-info {
+    background: linear-gradient(180deg, rgba(41, 165, 248, 0.05) 0%, rgba(41, 165, 248, 0.02) 100%);
+    border: 1px solid rgba(41, 165, 248, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.poc-secret {
+    background: var(--card-dark);
+    border: 1px solid var(--border-premium);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Status badge variations */
+.status-badge.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-badge.inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Secret key container animation */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(41, 165, 248, 0.1); }
+    50% { box-shadow: 0 0 15px rgba(41, 165, 248, 0.2); }
+    100% { box-shadow: 0 0 5px rgba(41, 165, 248, 0.1); }
+}
+
+.secret-key-container {
+    animation: glow 3s infinite;
+}
+
+/* Premium Sticky Header */
+nav {
+    transition: all 0.3s ease;
+}
+
+nav.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animated gradient for logo */
+.animate-gradient {
+    background-size: 200% auto;
+    animation: gradient 4s linear infinite;
+}
+
+@keyframes gradient {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* Glass effect for navbar */
+.backdrop-blur-md {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Add shadow on scroll */
+nav {
+    transition: box-shadow 0.3s ease;
+}
+
+nav.shadow-nav {
+    box-shadow: 0 4px 30px rgba(41, 165, 248, 0.1);
+}
+
+/* Container adjustments */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    nav {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Optional: Add scroll indicator */
+.scroll-indicator {
+    height: 2px;
+    background: linear-gradient(to right, #29A5F8, #29CCF8);
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+/* Footer Styles */
+footer {
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(41, 165, 248, 0.2) 50%, 
+        transparent 100%
+    );
+}
+
+/* Footer hover effects */
+footer a {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: #29A5F8;
+    transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid-cols-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .grid-cols-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Social icons hover effect */
+.social-icon {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-2px);
+}

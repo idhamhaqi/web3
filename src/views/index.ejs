@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zuxton - Modular Node Validator on TON</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+</head>
+<body class="bg-[#0B1024] text-white min-h-screen">
+    <!-- Header Banner -->
+    <div class="bg-gradient-to-r from-blue-600/10 to-cyan-600/10 p-2">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <img src="https://ton.org/download/ton_symbol.png" alt="TON" class="w-5 h-5"/>
+                <span class="text-sm">Hackers League: Apply for the $3M TON Hackathon</span>
+                <span class="text-lg ml-1">›</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="px-6 py-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">
+                Zuxton
+            </h1>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center text-gray-300">
+                    <span>🌐</span>
+                    <span class="ml-1">Eng</span>
+                </div>
+                <div id="ton-connect"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 text-center">
+        <div class="max-w-3xl mx-auto mt-32">
+            <h2 class="text-5xl font-bold mb-4">Modular Node Validator on</h2>
+            <p class="text-6xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-8">
+                The Open Network
+            </p>
+
+            <!-- Launch App Button Container -->
+            <div id="launchAppBtn" class="mt-12 mb-20 hidden">
+                <a href="/dashboard" 
+                   class="inline-block px-8 py-4 bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] rounded-full text-white font-semibold hover:opacity-90 transition-all duration-300">
+                    Launch App
+                </a>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+                <!-- Decentralized -->
+                <div class="p-8 bg-[#0E1629] rounded-xl border border-gray-800">
+                    <div class="text-[#29A5F8] mb-4">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Decentralized</h3>
+                    <p class="text-gray-400">A peer-to-peer network that has no centralized servers.</p>
+                </div>
+
+                <!-- Encrypted -->
+                <div class="p-8 bg-[#0E1629] rounded-xl border border-gray-800">
+                    <div class="text-[#29A5F8] mb-4">
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Encrypted</h3>
+                    <p class="text-gray-400">Encryption and verification of data via built-in cryptography.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+                manifestUrl: 'https://pastebin.com/raw/0bD8i18N',
+                buttonRootId: 'ton-connect'
+            });
+        
+            const launchBtn = document.getElementById('launchAppBtn');
+        
+            tonConnectUI.onStatusChange(async (wallet) => {
+                if (wallet) {
+                    try {
+                        const response = await fetch('/auth/wallet', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                walletAddress: wallet.account.address,
+                                referralCode: new URLSearchParams(window.location.search).get('ref')
+                            })
+                        });
+        
+                        const data = await response.json();
+                        if (data.token) {
+                            localStorage.setItem('auth_token', data.token);
+                            launchBtn.classList.remove('hidden');
+                        }
+                    } catch (error) {
+                        console.error('Auth error:', error);
+                    }
+                } else {
+                    localStorage.removeItem('auth_token');
+                    launchBtn.classList.add('hidden');
+                }
+            });
+        
+            // Check if already connected
+            const token = localStorage.getItem('auth_token');
+            if (token) {
+                launchBtn.classList.remove('hidden');
+            }
+        });
+        </script>
+</body>
+</html>
