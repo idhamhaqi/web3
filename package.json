@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Zuxton - Premium TON Network Web3 Platform",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js",
     "dev": "concurrently \"nodemon server.js\" \"npm run watch:css\"",

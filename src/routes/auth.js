@@ -1,7 +1,7 @@
-// src/routes/auth.js
-const express = require('express');
+import express from 'express';
+import AuthService from '../services/authService.js';
+
 const router = express.Router();
-const AuthService = require('../services/authService');
 
 // Landing page
 router.get('/', function(req, res) {
@@ -12,7 +12,7 @@ router.get('/', function(req, res) {
 // Wallet authentication
 router.post('/auth/wallet', function(req, res) {
     const { walletAddress, referralCode } = req.body;
-    
+   
     AuthService.authenticateWallet(walletAddress, referralCode)
         .then(auth => {
             res.json(auth);
@@ -23,4 +23,4 @@ router.post('/auth/wallet', function(req, res) {
         });
 });
 
-module.exports = router;
+export default router;

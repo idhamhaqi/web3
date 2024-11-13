@@ -1,4 +1,5 @@
-const db = require('../config/database');
+// src/middleware/validatorCheck.js
+import db from '../config/database.js';  // Jangan lupa .js di akhir
 
 async function validatorCheckMiddleware(req, res, next) {
     try {
@@ -6,7 +7,6 @@ async function validatorCheckMiddleware(req, res, next) {
             'SELECT validator_status FROM users WHERE id = ?',
             [req.user.id]
         );
-
         if (!user || !user[0] || !user[0].validator_status) {
             return res.status(403).json({
                 error: 'Validator not active',
@@ -20,4 +20,4 @@ async function validatorCheckMiddleware(req, res, next) {
     }
 }
 
-module.exports = validatorCheckMiddleware;
+export default validatorCheckMiddleware;

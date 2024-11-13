@@ -1,13 +1,13 @@
-const express = require('express');
+import express from 'express';
+import db from '../config/database.js';
+import authMiddleware from '../middleware/auth.js';
+import validatorCheckMiddleware from '../middleware/validatorCheck.js';
+
 const router = express.Router();
-const db = require('../config/database');
-const authMiddleware = require('../middleware/auth');
-const validatorCheckMiddleware = require('../middleware/validatorCheck');
 
 // Update points endpoint - akan dipanggil setiap menit
 router.post('/update-points', authMiddleware, async (req, res) => {
     try {
-        // Get current running session
         const [session] = await db.query(
             `SELECT id FROM node_sessions 
              WHERE user_id = ? AND status = 'running'
@@ -19,8 +19,6 @@ router.post('/update-points', authMiddleware, async (req, res) => {
             return res.status(404).json({ error: 'No active node session found' });
         }
 
-        // Update points and nodes validated
-        // Setiap menit: 1 node divalidasi = 0.1 poin
         const [result] = await db.query(
             `UPDATE node_sessions 
              SET nodes_validated = nodes_validated + 1,
@@ -39,7 +37,6 @@ router.post('/update-points', authMiddleware, async (req, res) => {
 // Get status endpoint
 router.get('/status', authMiddleware, async (req, res) => {
     try {
-        // Get current running session if any
         const [currentSession] = await db.query(
             `SELECT 
                 id,
@@ -54,7 +51,6 @@ router.get('/status', authMiddleware, async (req, res) => {
             [req.user.id]
         );
 
-        // Get today's stats
         const [todayStats] = await db.query(
             `SELECT 
                 SUM(nodes_validated) as today_nodes,
@@ -70,7 +66,6 @@ router.get('/status', authMiddleware, async (req, res) => {
             [req.user.id]
         );
 
-        // Get total stats
         const [totalStats] = await db.query(
             `SELECT 
                 SUM(nodes_validated) as total_nodes,
@@ -109,7 +104,6 @@ router.get('/status', authMiddleware, async (req, res) => {
 // Start node
 router.post('/start', authMiddleware, validatorCheckMiddleware, async (req, res) => {
     try {
-        // Check if already running
         const [running] = await db.query(
             'SELECT id FROM node_sessions WHERE user_id = ? AND status = "running"',
             [req.user.id]
@@ -121,7 +115,6 @@ router.post('/start', authMiddleware, validatorCheckMiddleware, async (req, res)
             });
         }
 
-        // Start new session
         const [result] = await db.query(
             `INSERT INTO node_sessions 
             (user_id, start_time, status, points_earned, nodes_validated)
@@ -146,7 +139,6 @@ router.post('/start', authMiddleware, validatorCheckMiddleware, async (req, res)
 // Stop node
 router.post('/stop', authMiddleware, async (req, res) => {
     try {
-        // Get current running session
         const [session] = await db.query(
             'SELECT id, start_time FROM node_sessions WHERE user_id = ? AND status = "running"',
             [req.user.id]
@@ -158,14 +150,12 @@ router.post('/stop', authMiddleware, async (req, res) => {
             });
         }
 
-        // Calculate hours and minutes
         const startTime = new Date(session[0].start_time);
         const endTime = new Date();
         const diffMs = endTime - startTime;
         const diffHours = diffMs / (1000 * 60 * 60);
-        const roundedHours = Math.max(diffHours, 0).toFixed(2); // Minimal 0, dengan 2 desimal
+        const roundedHours = Math.max(diffHours, 0).toFixed(2);
 
-        // Stop the session
         const [result] = await db.query(
             `UPDATE node_sessions 
              SET status = 'stopped',
@@ -176,7 +166,6 @@ router.post('/stop', authMiddleware, async (req, res) => {
         );
 
         if (result.affectedRows > 0) {
-            // Get final session stats
             const [finalStats] = await db.query(
                 `SELECT 
                     points_earned,
@@ -204,6 +193,4 @@ router.post('/stop', authMiddleware, async (req, res) => {
     }
 });
 
-
-
-module.exports = router;
+export default router;

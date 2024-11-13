@@ -1,31 +1,26 @@
-// src/models/validator.js
-const db = require('../config/database');
+import db from '../config/database.js';
 
 class Validator {
     static async activateValidator(userId, txHash) {
         try {
             // Extract only first part of hash if needed
             const processedHash = txHash.split(':')[0] || txHash;
-            
+           
             const query = `
-                UPDATE users 
+                UPDATE users
                 SET validator_status = true,
                     poc_tx_hash = ?,
                     poc_timestamp = CURRENT_TIMESTAMP
                 WHERE id = ?
             `;
-
             console.log('Executing query with:', {
                 userId,
                 processedHash: processedHash.substring(0, 50) // Log first 50 chars for debugging
             });
-
             const [result] = await db.query(query, [processedHash, userId]);
-
             if (result.affectedRows === 0) {
                 throw new Error('User not found or update failed');
             }
-
             return { success: true };
         } catch (error) {
             console.error('Database error in activateValidator:', error);
@@ -47,4 +42,4 @@ class Validator {
     }
 }
 
-module.exports = Validator;
+export default Validator;

@@ -1,11 +1,24 @@
-const express = require('express');
-const cookieParser = require('cookie-parser');
-const path = require('path');
-require('dotenv').config();
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import dotenv from 'dotenv';
+
+// Import routes
+import authRoutes from './src/routes/auth.js';
+import dashboardRoutes from './src/routes/dashboard.js';
+import nodeRoutes from './src/routes/nodeRunner.js';
+
+// Inisialisasi dotenv
+dotenv.config();
+
+// Setup untuk ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -18,13 +31,9 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.static('public'));
 
 // Routes
-const authRoutes = require('./src/routes/auth');
-const dashboardRoutes = require('./src/routes/dashboard');
-const nodeRoutes = require('./src/routes/nodeRunner'); // Add this line
-
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
-app.use('/node', nodeRoutes); // Add this line
+app.use('/node', nodeRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {
