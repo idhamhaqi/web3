@@ -5,123 +5,743 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zuxton - Modular Node Validator on TON</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="/css/styles.css" rel="stylesheet">
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <link href="/css/nodeRunner.css" rel="stylesheet">
+    <link rel="icon" href="/zxlogo.png" type="image/x-icon">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+    <style>
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float-slow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes float-medium {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes float-fast {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .animate-float-slow {
+            animation: float-slow 4s ease-in-out infinite;
+            animation-delay: 1s; /* Starts after fade-up */
+        }
+        
+        .animate-float-medium {
+            animation: float-medium 5s ease-in-out infinite;
+            animation-delay: 1.2s; /* Starts after fade-up */
+        }
+        
+        .animate-float-fast {
+            animation: float-fast 6s ease-in-out infinite;
+            animation-delay: 1.4s; /* Starts after fade-up */
+        }
+    </style>
 </head>
 <body class="bg-[#0B1024] text-white min-h-screen">
     <!-- Header Banner -->
     <div class="bg-gradient-to-r from-blue-600/10 to-cyan-600/10 p-2">
-        <div class="container mx-auto flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <img src="https://ton.org/download/ton_symbol.png" alt="TON" class="w-5 h-5"/>
-                <span class="text-sm">Hackers League: Apply for the $3M TON Hackathon</span>
-                <span class="text-lg ml-1">›</span>
-            </div>
+        <div class="container mx-auto flex items-center justify-center">
+            <a href="https://eco.ton.org/en/opportunities/hackers-league-winter-2024" class="group">
+                <div class="flex items-center space-x-2">
+                    <img src="https://ton.org/download/ton_symbol.png" alt="TON" class="w-5 h-5"/>
+                    <span class="text-sm text-gray-400 group-hover:text-[#29A5F8] transition-colors">Hackers League: Apply for the $3M TON Hackathon</span>
+                    <span class="text-lg ml-1 text-gray-400 group-hover:text-[#29A5F8] transition-colors">›</span>
+                </div>
+            </a>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="px-6 py-4">
+    <nav class="px-6 py-4 sticky top-0 z-50 bg-[#0B1024]/80 backdrop-blur-md border-b border-[#29A5F8]/10">
         <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">
+            <h1 class="text-2xl font-bold animate-gradient bg-gradient-to-r from-[#29A5F8] via-[#2983F8] to-[#29CCF8] bg-clip-text text-transparent">
                 Zuxton
             </h1>
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-6">
                 <div class="flex items-center text-gray-300">
-                    <span>🌐</span>
-                    <span class="ml-1">Eng</span>
+                    <i class="fas fa-globe mr-2"></i>
+                    <span>Eng</span>
                 </div>
                 <div id="ton-connect"></div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-6 text-center">
-        <div class="max-w-3xl mx-auto mt-32">
-            <h2 class="text-5xl font-bold mb-4">Modular Node Validator on</h2>
-            <p class="text-6xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-8">
+    <!-- Hero Section -->
+<section class="relative pt-20 pb-32" data-aos="fade-down" data-aos-duration="1000">
+    <!-- Abstract Background -->
+    <div class="absolute inset-0 z-0">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#29A5F8]/10 rounded-full blur-3xl animate-pulse"
+             data-aos="zoom-in" data-aos-delay="300"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#29CCF8]/10 rounded-full blur-3xl animate-float"
+             data-aos="zoom-in" data-aos-delay="500"></div>
+    </div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <!-- First heading -->
+        <h2 class="text-5xl font-bold mb-4" data-aos="fade-up" data-aos-delay="200">
+            <span class="inline-block animate-float-slow">Modular Node Validator on</span>
+        </h2>
+
+        <!-- "The Open Network" text -->
+        <div class="text-6xl font-bold mb-8" data-aos="fade-up" data-aos-delay="400">
+            <span class="inline-block animate-float-medium bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">
                 The Open Network
-            </p>
+            </span>
+        </div>
 
-            <!-- Launch App Button Container -->
-            <div id="launchAppBtn" class="mt-12 mb-20 hidden">
-                <a href="/dashboard" 
-                   class="inline-block px-8 py-4 bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] rounded-full text-white font-semibold hover:opacity-90 transition-all duration-300">
-                    Launch App
-                </a>
-            </div>
+        <!-- Description -->
+        <p class="text-xl text-gray-400 mb-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="600">
+            <span class="inline-block animate-float-fast">
+                Effortless, secure, and efficient node validation on TON, backed by Proof of Contribution.
+            </span>
+        </p>
 
-            <!-- Features Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
-                <!-- Decentralized -->
-                <div class="p-8 bg-[#0E1629] rounded-xl border border-gray-800">
-                    <div class="text-[#29A5F8] mb-4">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
+        <!-- Launch App Button -->
+        <div id="launchAppBtn" class="mt-12 mb-20 hidden" data-aos="fade-up" data-aos-delay="800">
+            <a href="/dashboard"
+               class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] rounded-full text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg hover:shadow-[#29A5F8]/20">
+                Launch App
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-[#0F172A]">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- About Feature -->
+                <div class="p-8 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10 hover:border-[#29A5F8]/30 transition-all duration-300">
+                    <div class="text-[#29A5F8] mb-6">
+                        <i class="fas fa-shield-alt text-4xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Decentralized</h3>
-                    <p class="text-gray-400">A peer-to-peer network that has no centralized servers.</p>
+                    <h3 class="text-xl font-semibold mb-4">A Next-Gen Validation Platform</h3>
+                    <p class="text-gray-400">Zuxton seamlessly combines blockchain, cloud computing, and client device resources to deliver real-time node validation.</p>
                 </div>
 
-                <!-- Encrypted -->
-                <div class="p-8 bg-[#0E1629] rounded-xl border border-gray-800">
-                    <div class="text-[#29A5F8] mb-4">
-                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
+                <!-- PoC Feature -->
+                <div class="p-8 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10 hover:border-[#29A5F8]/30 transition-all duration-300">
+                    <div class="text-[#29A5F8] mb-6">
+                        <i class="fas fa-key text-4xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold mb-3">Encrypted</h3>
-                    <p class="text-gray-400">Encryption and verification of data via built-in cryptography.</p>
+                    <h3 class="text-xl font-semibold mb-4">Proof of Contribution (PoC)</h3>
+                    <p class="text-gray-400">Unique PoC system on TON, assigning each validator a one-of-a-kind PoC key for secure network validation.</p>
+                </div>
+
+                <!-- Rewards Feature -->
+                <div class="p-8 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10 hover:border-[#29A5F8]/30 transition-all duration-300">
+                    <div class="text-[#29A5F8] mb-6">
+                        <i class="fas fa-trophy text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-4">Earn Rewards</h3>
+                    <p class="text-gray-400">Earn points for every contribution and node validation. Get rewarded in ZTON for securing the network.</p>
                 </div>
             </div>
         </div>
-    </main>
+    </section>
 
+    <!-- Community Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Left Side -->
+                <div class="lg:w-1/2" data-aos="fade-right">
+                    <h2 class="text-4xl font-bold mb-6" data-aos="fade-up" data-aos-delay="200">
+                        <span class="bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">
+                            Growing Community on ZUXTON
+                        </span>
+                    </h2>
+                    <p class="text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="300">Join a growing network of contributors committed to decentralization. Track your contributions, rewards, and activity in real-time.</p>
+                    
+                    <!-- Stats Grid -->
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="text-center p-6 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10" 
+                             data-aos="zoom-in" data-aos-delay="400">
+                            <div class="text-3xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-2">10.000+</div>
+                            <div class="text-gray-400">Active Validators</div>
+                        </div>
+                        <div class="text-center p-6 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10"
+                             data-aos="zoom-in" data-aos-delay="500">
+                            <div class="text-3xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-2">24/7</div>
+                            <div class="text-gray-400">Network Uptime</div>
+                        </div>
+                    </div>
+                </div>
+     
+                <!-- Right Side -->
+                <div class="lg:w-1/2" data-aos="fade-left">
+                    <div class="p-8 bg-[#0E1629] rounded-xl border border-[#29A5F8]/10">
+                        <div class="flex items-center gap-4 mb-6" data-aos="fade-up" data-aos-delay="200">
+                            <i class="fas fa-users text-[#29A5F8] text-2xl"></i>
+                            <h3 class="text-xl font-bold">Community Stats</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-[#0B1024] rounded-lg" 
+                                 data-aos="fade-up" data-aos-delay="300">
+                                <span class="text-gray-400">Total Validators</span>
+                                <span class="font-semibold">11,234</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-[#0B1024] rounded-lg"
+                                 data-aos="fade-up" data-aos-delay="400">
+                                <span class="text-gray-400">Active Nodes</span>
+                                <span class="font-semibold">10,807</span>
+                            </div>
+                            <div class="flex justify-between items-center p-4 bg-[#0B1024] rounded-lg"
+                                 data-aos="fade-up" data-aos-delay="500">
+                                <span class="text-gray-400">Network Health</span>
+                                <span class="text-green-400 font-semibold">98.7%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+     </section>
+
+    <!-- Tokenomics Section -->
+<section class="py-20 bg-gradient-to-b from-[#0F172A] to-[#0B1024]">
+    <div class="container mx-auto px-6">
+        <!-- Section Header with Animation -->
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="1000">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-6">
+                Tokenomics
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                ZTON token distribution and vesting schedule
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <!-- Team & Operations -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300" 
+                 data-aos="fade-up" 
+                 data-aos-delay="100" 
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-users text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">Team & Development</h3>
+                        <p class="text-gray-400">10% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">10,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">Vesting: 6 month unlock every month after CEX listing</p>
+                </div>
+            </div>
+
+            <!-- Early Investors -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300"
+                 data-aos="fade-up" 
+                 data-aos-delay="200"
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-handshake text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">Early Investors</h3>
+                        <p class="text-gray-400">10% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">10,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">Vesting: 6 month unlock every month after CEX listing</p>
+                </div>
+            </div>
+
+            <!-- Airdrop -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300"
+                 data-aos="fade-up" 
+                 data-aos-delay="300"
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-parachute-box text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">Airdrop</h3>
+                        <p class="text-gray-400">20% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">20,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">No Vesting</p>
+                </div>
+            </div>
+
+            <!-- Point Conversion Pool -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300"
+                 data-aos="fade-up" 
+                 data-aos-delay="400"
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-exchange-alt text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">Point Conversion Pool</h3>
+                        <p class="text-gray-400">40% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">40,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">No Vesting</p>
+                </div>
+            </div>
+
+            <!-- CEX Listing Reserve -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300"
+                 data-aos="fade-up" 
+                 data-aos-delay="500"
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-building-columns text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">CEX Listing Reserve</h3>
+                        <p class="text-gray-400">15% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">15,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">Reserved for CEX listings</p>
+                </div>
+            </div>
+
+            <!-- Marketing and Operational -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300"
+                 data-aos="fade-up" 
+                 data-aos-delay="600"
+                 data-aos-duration="1000">
+                <div class="flex items-center gap-4 mb-4">
+                    <i class="fas fa-building text-[#29A5F8] text-2xl"></i>
+                    <div>
+                        <h3 class="text-[#29A5F8] font-semibold">Marketing & Operations</h3>
+                        <p class="text-gray-400">5% Supply</p>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-white font-semibold">5,000,000 ZTON</p>
+                    <p class="text-gray-400 text-sm">Marketing Campaign & Operations</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Token Section -->
+<section class="py-8 md:py-20 bg-[#0F172A]">
+    <div class="container mx-auto px-4 md:px-6">
+        <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-4 md:p-8 hover:border-[#29A5F8]/30 transition-all duration-300">
+                <!-- Flex container dengan flex-wrap untuk mobile -->
+                <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+                    <!-- Token Info -->
+                    <div class="flex items-center gap-4" data-aos="fade-right" data-aos-delay="200" data-aos-duration="800">
+                        <img src="zxlogo.png" alt="ZTON" class="w-10 h-10 md:w-12 md:h-12 animate-pulse"/>
+                        <div>
+                            <h3 class="text-[#29A5F8] text-lg md:text-xl font-semibold bg-gradient-to-r from-[#29A5F8] via-[#2983F8] to-[#29CCF8] bg-clip-text text-transparent">ZTON Token</h3>
+                            <p class="text-gray-400 text-sm">Zuxton Ecosystem Token</p>
+                        </div>
+                    </div>
+                   
+                    <!-- Token Details -->
+                    <div class="flex flex-col md:flex-row md:items-center gap-6 md:gap-8 md:ml-auto">
+                        <!-- Max Supply -->
+                        <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="800">
+                            <div class="text-gray-400 text-sm">Max Supply</div>
+                            <div class="text-lg md:text-xl font-semibold text-[#29A5F8] bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">100,000,000</div>
+                            <div class="text-gray-400 text-sm">ZTON</div>
+                        </div>
+                       
+                        <!-- Contract Address -->
+                        <div class="w-full md:w-auto group" data-aos="fade-left" data-aos-delay="600" data-aos-duration="800">
+                            <div class="text-gray-400 text-sm">Contract Address</div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-400 text-sm truncate max-w-[180px] md:max-w-[200px] group-hover:text-[#29A5F8] transition-colors">
+                                    EQCEXKwnUmv0O9fn6hXAgdbYiQ2v18AHtH8WFVNTJv2TSIwS
+                                </span>
+                                <a href="https://tonviewer.com/EQCEXKwnUmv0O9fn6hXAgdbYiQ2v18AHtH8WFVNTJv2TSIwS" 
+                                   class="text-[#29A5F8] hover:text-[#29CCF8] transition-all duration-300 transform hover:scale-110">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Phase Section -->
+<section class="py-20 bg-[#0B1024]">
+    <div class="container mx-auto px-6">
+        <!-- Header with Animation -->
+        <div class="text-center mb-12" data-aos="fade-down" data-aos-duration="1000">
+            <i class="fas fa-layer-group text-[#29A5F8] text-3xl mb-4 animate-bounce"></i>
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent">Development Phases</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <!-- Phase 1 -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300 group"
+                 data-aos="fade-right" 
+                 data-aos-delay="100"
+                 data-aos-duration="1000">
+                <h3 class="text-[#29A5F8] font-semibold mb-4 group-hover:text-[#29CCF8] transition-colors">Phase 1</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="150">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Website Development
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="200">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        System Testing
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="250">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Token Creation (ZTON)
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300 group"
+                 data-aos="fade-right" 
+                 data-aos-delay="300"
+                 data-aos-duration="1000">
+                <h3 class="text-[#29A5F8] font-semibold mb-4 group-hover:text-[#29CCF8] transition-colors">Phase 2</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="350">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Partnership Outreach
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="400">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Node Validation Event
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="450">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Airdrop Allocation
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300 group"
+                 data-aos="fade-left" 
+                 data-aos-delay="500"
+                 data-aos-duration="1000">
+                <h3 class="text-[#29A5F8] font-semibold mb-4 group-hover:text-[#29CCF8] transition-colors">Phase 3</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="550">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Snapshot
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="600">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Token Generation Event
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="650">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Airdrop Distribution
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 hover:bg-[#0E1629]/70 transition-all duration-300 group"
+                 data-aos="fade-left" 
+                 data-aos-delay="700"
+                 data-aos-duration="1000">
+                <h3 class="text-[#29A5F8] font-semibold mb-4 group-hover:text-[#29CCF8] transition-colors">Phase 4</h3>
+                <ul class="space-y-3">
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="750">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        CEX Partnerships
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="800">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Token Listing on CEX
+                    </li>
+                    <li class="flex items-center gap-2 text-gray-400 hover:text-[#29A5F8] transition-colors"
+                        data-aos="fade-up" 
+                        data-aos-delay="850">
+                        <i class="fas fa-check text-[#29A5F8] text-sm group-hover:scale-110 transition-transform"></i>
+                        Continued Development
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Investors Section -->
+<section class="py-20 bg-[#0B1024]">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] bg-clip-text text-transparent mb-6">
+                Backend By
+            </h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-8">
+                Join our growing network of strategic partners and investors
+            </p>
+        </div>
+
+        <!-- Carousel Container -->
+        <div class="relative max-w-6xl mx-auto overflow-hidden">
+            <!-- Carousel Track -->
+            <div class="flex transition-transform duration-500" id="investorTrack">
+                <!-- First Slide -->
+                <div class="min-w-full flex items-center justify-center p-8">
+                    <img src="/assets/images/cap.png" alt="Investor 1" class="w-full h-auto object-contain opacity-80 hover:opacity-100 transition-opacity" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Fundraising Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-16">
+            <!-- Total Fundraising -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 transition-all duration-300">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-sack-dollar text-[#29A5F8] text-3xl mb-3"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">$25M</h3>
+                    <p class="text-gray-400 text-center text-sm">Total Fundraising</p>
+                </div>
+            </div>
+
+            <!-- Initial Market Cap -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 transition-all duration-300">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-chart-pie text-[#29A5F8] text-3xl mb-3"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">$15M</h3>
+                    <p class="text-gray-400 text-center text-sm">Initial Market Cap</p>
+                </div>
+            </div>
+
+            <!-- Growing Investment -->
+            <div class="bg-[#0E1629]/50 backdrop-blur-sm rounded-xl border border-[#29A5F8]/10 p-6 hover:border-[#29A5F8]/40 transition-all duration-300">
+                <div class="flex flex-col items-center">
+                    <i class="fas fa-chart-line text-[#29A5F8] text-3xl mb-3"></i>
+                    <h3 class="text-2xl font-bold text-white mb-2">Growing</h3>
+                    <p class="text-gray-400 text-center text-sm">Continuous Development</p>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <!-- Additional Info -->
+        <div class="text-center mt-8">
+            <p class="text-gray-400 text-sm">
+                *Investment amount will continue increase as investors develop
+            </p>
+        </div>
+    </div>
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-                manifestUrl: 'https://pastebin.com/raw/0bD8i18N',
-                buttonRootId: 'ton-connect'
-            });
-        
-            const launchBtn = document.getElementById('launchAppBtn');
-        
-            tonConnectUI.onStatusChange(async (wallet) => {
-                if (wallet) {
-                    try {
-                        const response = await fetch('/auth/wallet', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                walletAddress: wallet.account.address,
-                                referralCode: new URLSearchParams(window.location.search).get('ref')
-                            })
-                        });
-        
-                        const data = await response.json();
-                        if (data.token) {
-                            localStorage.setItem('auth_token', data.token);
-                            launchBtn.classList.remove('hidden');
-                        }
-                    } catch (error) {
-                        console.error('Auth error:', error);
+        // Carousel functionality
+        const track = document.getElementById('investorTrack');
+        const slides = track.children;
+       
+        if (slides.length > 1) {
+            let currentIndex = 0;
+           
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }, 5000);
+        }
+    </script>
+</section>
+
+    <!-- Premium Footer -->
+<footer class="bg-[#0F172A] border-t border-[#29A5F8]/10 mt-12">
+    <div class="container mx-auto px-6 py-8">
+        <!-- Main Footer Content -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <!-- Brand Section -->
+            <div class="col-span-1">
+                <h3 class="text-2xl font-black mb-4">
+                    <span class="animate-gradient bg-gradient-to-r from-[#29A5F8] via-[#2983F8] to-[#29CCF8] bg-clip-text text-transparent">
+                        Zuxton
+                    </span>
+                </h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Empowering decentralized validation through innovative node running solutions.
+                </p>
+                <div class="flex space-x-4">
+                    <!-- Social Links -->
+                    <a href="https://x.com/zuxton" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+                    </a>
+                    <a href="https://github.com/zuxton/contracts" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0C5.374 0 0 5.374 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.626-5.374-12-12-12z"/>
+                        </svg>
+                    </a>
+                    <a href="https://t.me/zuxtonofficial" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+ 
+            <!-- Products -->
+            <div class="col-span-1">
+                <h4 class="text-white font-semibold mb-4">Products</h4>
+                <ul class="space-y-2">
+                    <li><a href="dashboard" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Node Runner</a></li>
+                    <li><a href="dashboard" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Validator Program</a></li>
+                    <li><a href="/airdrop" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Airdrop Program</a></li>
+                    
+                </ul>
+            </div>
+ 
+            <!-- Resources -->
+            <div class="col-span-1">
+                <h4 class="text-white font-semibold mb-4">Resources</h4>
+                <ul class="space-y-2">
+                    <li><a href="https://github.com/zuxton" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Documentation</a></li>
+                    
+                    <li><a href="https://t.me/zuxtonofficial" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Community</a></li>
+                </ul>
+            </div>
+ 
+            <!-- Company -->
+            <div class="col-span-1">
+                <h4 class="text-white font-semibold mb-4">Company</h4>
+                <ul class="space-y-2">
+                    
+                    <li><a href="mailto:support@zuxton.com" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+ 
+        <!-- Bottom Footer -->
+        <div class="border-t border-[#29A5F8]/10 pt-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Zuxton. All rights reserved.
+                </div>
+                <div class="flex space-x-6">
+                    <a href="/privacy" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </div>
+ </footer>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://pastebin.com/raw/swi6Dwxq',
+            buttonRootId: 'ton-connect'
+        });
+   
+        const launchBtn = document.getElementById('launchAppBtn');
+   
+        tonConnectUI.onStatusChange(async (wallet) => {
+            if (wallet) {
+                try {
+                    const response = await fetch('/auth/wallet', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            walletAddress: wallet.account.address,
+                            referralCode: new URLSearchParams(window.location.search).get('ref')
+                        })
+                    });
+   
+                    const data = await response.json();
+                    if (data.token) {
+                        localStorage.setItem('auth_token', data.token);
+                        launchBtn.classList.remove('hidden');
                     }
-                } else {
-                    localStorage.removeItem('auth_token');
-                    launchBtn.classList.add('hidden');
+                } catch (error) {
+                    console.error('Auth error:', error);
                 }
-            });
-        
-            // Check if already connected
-            const token = localStorage.getItem('auth_token');
-            if (token) {
-                launchBtn.classList.remove('hidden');
+            } else {
+                localStorage.removeItem('auth_token');
+                launchBtn.classList.add('hidden');
             }
         });
-        </script>
+   
+        // Check if already connected
+        const token = localStorage.getItem('auth_token');
+        if (token) {
+            launchBtn.classList.remove('hidden');
+        }
+
+        // Tambahkan setup event listeners
+        setupWalletEventListeners();
+    });
+
+    // Fungsi untuk setup event listeners wallet
+    function setupWalletEventListeners() {
+        window.addEventListener('ton-connect-ui-connection-lost', (event) => {
+            console.log('Connection lost:', event.detail);
+            localStorage.removeItem('auth_token');
+            const launchBtn = document.getElementById('launchAppBtn');
+            launchBtn.classList.add('hidden');
+        });
+
+        window.addEventListener('ton-connect-ui-connection-error', (event) => {
+            console.log('Connection error:', event.detail);
+            localStorage.removeItem('auth_token');
+            const launchBtn = document.getElementById('launchAppBtn');
+            launchBtn.classList.add('hidden');
+        });
+    }
+</script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+   <script>
+       // Initialize AOS
+       AOS.init({
+           duration: 1000,
+           once: true,
+           offset: 100
+       });
+   </script>
 </body>
 </html>

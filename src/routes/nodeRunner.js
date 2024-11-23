@@ -8,9 +8,10 @@ const router = express.Router();
 // Update points endpoint - akan dipanggil setiap menit
 router.post('/update-points', authMiddleware, async (req, res) => {
     try {
+        // Cek active session
         const [session] = await db.query(
             `SELECT id FROM node_sessions 
-             WHERE user_id = ? AND status = 'running'
+             WHERE user_id = ? AND status = 'running' 
              LIMIT 1`,
             [req.user.id]
         );
@@ -19,15 +20,28 @@ router.post('/update-points', authMiddleware, async (req, res) => {
             return res.status(404).json({ error: 'No active node session found' });
         }
 
+        // Generate random values
+        const nodesValidated = Math.floor(Math.random() * 2) + 1; // Random 1-2 nodes
+        const pointsPerNode = (Math.random() * 0.2 + 0.1).toFixed(1); // Random 0.1-0.3 points
+        const totalPoints = (nodesValidated * pointsPerNode).toFixed(1); // Calculate total points
+
+        // Update database dengan nilai random
         const [result] = await db.query(
             `UPDATE node_sessions 
-             SET nodes_validated = nodes_validated + 1,
-                 points_earned = points_earned + 0.1
+             SET nodes_validated = nodes_validated + ?,
+                 points_earned = points_earned + ?
              WHERE id = ? AND status = 'running'`,
-            [session[0].id]
+            [nodesValidated, totalPoints, session[0].id]
         );
 
-        res.json({ success: true });
+        res.json({ 
+            success: true,
+            details: {
+                nodesValidated,
+                pointsEarned: totalPoints
+            }
+        });
+
     } catch (error) {
         console.error('Error updating points:', error);
         res.status(500).json({ error: 'Failed to update points' });

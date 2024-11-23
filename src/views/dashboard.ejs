@@ -8,34 +8,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="/css/styles.css" rel="stylesheet">
     <link href="/css/nodeRunner.css" rel="stylesheet">
+    <link rel="icon" href="/zxlogo.png" type="image/x-icon">
     <!-- Load TON Connect UI first -->
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js?v=2"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@2.0.9/dist/tonconnect-ui.min.js"></script>
+    
     
 </head>
 <body class="bg-[#0B1024] text-white">
     <div class="min-h-screen">
-        <!-- Navigation -->
-<nav class="fixed top-0 w-full z-50 bg-[#0F172A] border-b border-[#29A5F8]/10 backdrop-blur-md">
-    <div class="container mx-auto px-6 py-4">
-        <div class="flex justify-between items-center">
-            <!-- Logo with animated gradient -->
-            <h1 class="text-2xl font-black tracking-tight">
-                <span class="animate-gradient bg-gradient-to-r from-[#29A5F8] via-[#2983F8] to-[#29CCF8] bg-clip-text text-transparent">
+        <!-- Navigation Dashboard -->
+        <nav class="px-6 py-4 sticky top-0 z-50 bg-[#0B1024]/80 backdrop-blur-md border-b border-[#29A5F8]/10">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold animate-gradient bg-gradient-to-r from-[#29A5F8] via-[#2983F8] to-[#29CCF8] bg-clip-text text-transparent">
                     Zuxton
-                </span>
-            </h1>
-            
-            <!-- Wallet Connect Button -->
-            <div class="flex items-center space-x-4">
-                <!-- Optional: Add navigation items here -->
-                <div id="ton-connect"></div>
+                </h1>
+                <div class="flex items-center space-x-2">
+                    <div class="flex items-center text-gray-300">
+                        <i class="fas fa-globe mr-2"></i>
+                        <span></span>
+                    </div>
+                    <div id="ton-connect"></div>
+                </div>
             </div>
-        </div>
-    </div>
- </nav>
+        </nav>
  
  <!-- Spacer to prevent content from going under fixed navbar -->
- <div class="h-[72px]"></div>
+ <div class="h-[0px]"></div>
 
         <!-- Dashboard Content -->
         <main class="container mx-auto px-6 py-8">
@@ -88,15 +86,15 @@
                         <h3 class="text-sm font-semibold text-gray-400 mb-3">Total Statistics</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Total Nodes</span>
+                                <span class="text-gray-400">Nodes</span>
                                 <span id="totalNodes" class="text-[#29A5F8] font-semibold">0</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Total Points</span>
+                                <span class="text-gray-400">Points</span>
                                 <span id="totalPoints" class="text-[#29A5F8] font-semibold">0.0</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Total Hours</span>
+                                <span class="text-gray-400">Hours</span>
                                 <span id="totalHours" class="time-display">0h</span>
                             </div>
                         </div>
@@ -153,53 +151,141 @@
     </div>
  </div>
 
-            <!-- Referral Card -->
-            <div class="premium-card p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-semibold gradient-text">Referral Program</h2>
-                    <div class="px-4 py-1 rounded-full text-sm bg-[#1A2235]">
-                        <span class="text-gray-400">Total Referrals: </span>
-                        <span id="totalReferrals" class="text-[#29A5F8]">0</span>
-                    </div>
-                </div>
+ <!-- Social Media Section -->
+<div class="premium-card p-6 mb-6">
+    <div class="mb-4">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold gradient-text">Social Media Connection</h2>
             
-                <div class="space-y-4">
-                    <div class="relative">
-                        <input type="text" 
-                               id="referralLink" 
-                               readonly 
-                               class="w-full bg-[#1A2235] rounded-lg py-3 pl-4 pr-12 text-gray-300 font-mono text-sm"
-                               value="">
-                        <button onclick="copyReferralLink()" 
-                                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#29A5F8] transition-colors">
-                            <svg id="copyIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
-                            </svg>
-                            <svg id="checkIcon" class="w-5 h-5 hidden text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            
-                <!-- Referrals List -->
-                <div class="mt-6 overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="text-left text-gray-400">
-                                <th class="pb-4">Wallet</th>
-                                <th class="pb-4">Joined Date</th>
-                            </tr>
-                        </thead>
-                        <tbody id="referralsList" class="text-truncate">
-                            <!-- Will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </div>
-        </main>
+        </div>
+        <p class="text-sm text-gray-400 mt-2">Follow Zuxton Official social media account. Connect your social media accounts to stay updated with Zuxton's latest news and announcements.</p>
     </div>
+
+    <!-- Official Links -->
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+            <a href="https://x.com/ZuxtonOfficial" target="_blank" class="text-[#29A5F8] hover:underline">@ZuxtonOfficial</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <svg class="w-5 h-5 text-[#26A5E4]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.12.02-1.96 1.25-5.54 3.69-.52.36-1 .53-1.42.52-.47-.01-1.37-.26-2.03-.48-.82-.27-1.47-.42-1.42-.88.03-.24.27-.48.74-.73 2.87-1.25 4.79-2.08 5.76-2.5 2.73-1.18 3.3-1.39 3.67-1.39.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .24z"/>
+            </svg>
+            <a href="https://t.me/ZuxtonChannel" target="_blank" class="text-[#29A5F8] hover:underline">Zuxton Channel</a>
+        </div>
+    </div>
+
+    <!-- Submit Section -->
+    <div class="text-center">
+        <a href="https://forms.gle/3djQfjyU1R2Gcpkw7" 
+           target="_blank" 
+           class="btn-premium inline-flex items-center gap-2">
+            Submit Your Data
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+        </a>
+    </div>
+</div>
+
+<!-- Airdrop Eligibility Card -->
+<div id="airdropSection" class="premium-card p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold gradient-text">Airdrop Eligibility</h2>
+        <div id="eligibilityStatus" class="status-badge"></div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="bg-[#1A2235] rounded-lg p-4 mb-4 border border-[#29A5F8]/10">
+        <p class="text-gray-400 text-sm leading-relaxed">
+            Earn big rewards with Zuxton's TGE Airdrop! Collect points through active node validation to become eligible. Rewards for eligible participants are valued at over 10x the current 1 TON price. Required points may increase according to the network and community growing
+        </p>
+    </div>
+
+    <!-- Stats Panel -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div class="bg-[#1A2235] p-4 rounded-lg border border-[#29A5F8]/10">
+            <div class="text-gray-400 text-sm mb-2">Your Total Points</div>
+            <div class="text-2xl font-bold text-[#29A5F8]">
+                <span id="airdropTotalPoints">0.00</span>
+            </div>
+        </div>
+        <div class="bg-[#1A2235] p-4 rounded-lg border border-[#29A5F8]/10">
+            <div class="text-gray-400 text-sm mb-2">Required Points</div>
+            <div class="text-2xl font-bold text-[#29A5F8]">
+                <span id="requiredPoints">400.00</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mb-4">
+        <div class="h-2 bg-[#1A2235] rounded-full overflow-hidden">
+            <div id="eligibilityProgress" class="h-full bg-gradient-to-r from-[#29A5F8] to-[#29CCF8] transition-all duration-500" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Status Message -->
+    <div id="eligibilityMessage" class="text-center text-sm text-gray-400">
+        <!-- Will be populated by JavaScript -->
+    </div>
+</div>
+
+
+            <!-- Referral Card -->
+<div class="premium-card p-6">
+    <div class="mb-4">
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold gradient-text">Referral Program</h2>
+            <div class="px-4 py-1 rounded-full text-sm bg-[#1A2235]">
+                <span class="text-gray-400">Total Referrals: </span>
+                <span id="totalReferrals" class="text-[#29A5F8]">0</span>
+            </div>
+        </div>
+        <p class="text-sm text-gray-400 mt-2">The number of referrals will be used as a multiplier for ZTON token during the TGE and airdrop event</p>
+    </div>
+
+    <div class="space-y-4">
+        <div class="relative">
+            <input type="text"
+                   id="referralLink"
+                   readonly
+                   class="w-full bg-[#1A2235] rounded-lg py-3 pl-4 pr-12 text-gray-300 font-mono text-sm"
+                   value="">
+            <button onclick="copyReferralLink()"
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#29A5F8] transition-colors">
+                <svg id="copyIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                </svg>
+                <svg id="checkIcon" class="w-5 h-5 hidden text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Referrals List -->
+    <div class="mt-6 overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="text-left text-gray-400">
+                    <th class="pb-4">Wallet</th>
+                    <th class="pb-4">Joined Date</th>
+                </tr>
+            </thead>
+            <tbody id="referralsList" class="text-truncate">
+                <!-- Will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</main>
+</div>
+
+
 
     <!-- Premium Footer -->
 <footer class="bg-[#0F172A] border-t border-[#29A5F8]/10 mt-12">
@@ -218,19 +304,19 @@
                 </p>
                 <div class="flex space-x-4">
                     <!-- Social Links -->
-                    <a href="#" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                    <a href="https://x.com/zuxton" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                        </svg>
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                    <a href="https://github.com/zuxton/contracts" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0C5.374 0 0 5.374 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.626-5.374-12-12-12z"/>
                         </svg>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
+                    <a href="https://t.me/zuxtonofficial" class="text-gray-400 hover:text-[#29A5F8] transition-colors">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0h-.056zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                         </svg>
                     </a>
                 </div>
@@ -240,9 +326,10 @@
             <div class="col-span-1">
                 <h4 class="text-white font-semibold mb-4">Products</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Node Runner</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Validator Program</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Referral System</a></li>
+                    <li><a href="dashboard" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Node Runner</a></li>
+                    <li><a href="dashboard" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Validator Program</a></li>
+                    <li><a href="/airdrop" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Airdrop Program</a></li>
+                    
                 </ul>
             </div>
  
@@ -250,9 +337,9 @@
             <div class="col-span-1">
                 <h4 class="text-white font-semibold mb-4">Resources</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Documentation</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">API Reference</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Community</a></li>
+                    <li><a href="https://github.com/zuxton" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Documentation</a></li>
+                    
+                    <li><a href="https://t.me/zuxtonofficial" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Community</a></li>
                 </ul>
             </div>
  
@@ -260,9 +347,8 @@
             <div class="col-span-1">
                 <h4 class="text-white font-semibold mb-4">Company</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">About Us</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Blog</a></li>
-                    <li><a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Contact</a></li>
+                    
+                    <li><a href="mailto:support@zuxton.com" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -274,8 +360,8 @@
                     © 2024 Zuxton. All rights reserved.
                 </div>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Terms of Service</a>
+                    <a href="/privacy" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Privacy Policy</a>
+                    <a href="/terms" class="text-gray-400 hover:text-[#29A5F8] text-sm transition-colors">Terms of Service</a>
                 </div>
             </div>
         </div>
@@ -303,5 +389,7 @@
     </script>
     <script src="/js/dashboard.js"></script>
     <script src="/js/scrol.js"></script>
+    <script src="/js/airdrop.js"></script>
+    
 </body>
 </html>

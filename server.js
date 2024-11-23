@@ -9,6 +9,9 @@ import dotenv from 'dotenv';
 import authRoutes from './src/routes/auth.js';
 import dashboardRoutes from './src/routes/dashboard.js';
 import nodeRoutes from './src/routes/nodeRunner.js';
+import airdropRoutes from './src/routes/airdrop.js';
+import pageRoutes from './src/routes/pages.js';
+
 
 // Inisialisasi dotenv
 dotenv.config();
@@ -34,6 +37,10 @@ app.use(express.static('public'));
 app.use('/', authRoutes);
 app.use('/dashboard', dashboardRoutes);
 app.use('/node', nodeRoutes);
+app.use('/api/airdrop', airdropRoutes);
+app.use('/', pageRoutes);
+
+
 
 // Global error handler
 app.use((err, req, res, next) => {

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize TON Connect
     tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-        manifestUrl: 'https://pastebin.com/raw/huGaZrh4',
+        manifestUrl: 'https://pastebin.com/raw/swi6Dwxq',
         buttonRootId: 'ton-connect',
         
     });
@@ -26,6 +26,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             localStorage.removeItem('auth_token');
             window.location.href = '/';
         }
+    });
+
+    window.addEventListener('ton-wallet-disconnected', () => {
+        localStorage.removeItem('auth_token');
+        window.location.href = '/';
     });
 
     // Load initial data
@@ -46,6 +51,20 @@ function setupTransactionEventListeners() {
 
     window.addEventListener('ton-connect-ui-transaction-signing-failed', (event) => {
         console.log('Transaction signing failed:', event.detail);
+    });
+
+    // Tambahkan event listener untuk wallet disconnect
+    window.addEventListener('ton-connect-ui-connection-lost', (event) => {
+        console.log('Connection lost:', event.detail);
+        localStorage.removeItem('auth_token');
+        window.location.href = '/';
+    });
+
+    // Tambahkan event untuk error koneksi
+    window.addEventListener('ton-connect-ui-connection-error', (event) => {
+        console.log('Connection error:', event.detail);
+        localStorage.removeItem('auth_token');
+        window.location.href = '/';
     });
 }
 
@@ -211,6 +230,7 @@ function copyReferralLink() {
 
 function updateReferralsList(referrals) {
     const referralsList = document.getElementById('referralsList');
+    
     if (referrals.length === 0) {
         referralsList.innerHTML = `
             <tr>
@@ -218,7 +238,10 @@ function updateReferralsList(referrals) {
             </tr>
         `;
     } else {
-        referralsList.innerHTML = referrals.map(ref => `
+        // Mengambil 5 data terakhir dengan slice(-5)
+        const lastFiveReferrals = referrals.slice(-5);
+        
+        referralsList.innerHTML = lastFiveReferrals.map(ref => `
             <tr class="border-t border-gray-800">
                 <td class="py-4 font-mono text-sm">${ref.wallet_address}</td>
                 <td class="py-4 text-gray-400">${new Date(ref.created_at).toLocaleDateString()}</td>
